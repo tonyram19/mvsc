@@ -60,6 +60,7 @@ public class Card : MonoBehaviour
                 gameManager.mainCard.transform.Find("Icon").GetComponent<Image>().sprite.name)
             {
                 gameManager.ResetCards();
+                gameManager.score++;
             }
             else
             {

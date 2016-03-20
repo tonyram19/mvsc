@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public AudioManager audioManager;
 
     [Header("Life")]
-    public int health = 3;
     public GameObject[] heartsArray;
     public List<GameObject> hearts;
 
@@ -19,6 +18,9 @@ public class GameManager : MonoBehaviour
     public float totalTime;
     public float currentTime;
     public Image timerBar;
+
+    [Header("Score")]
+    public int score = 0;
 
     [Header("Cards")]
     public GameObject mainCard;
@@ -29,6 +31,11 @@ public class GameManager : MonoBehaviour
     public Vector2 mainCardPosition;
     public Vector2[] cardsPositions;
 
+    [Header("Other")]
+    public GameObject quitGameDialog;
+    public GameObject gameOverDialog;
+    public Text gameOverText;
+
     void Start ()
     {
         activeCards = new List<GameObject>();
@@ -38,6 +45,7 @@ public class GameManager : MonoBehaviour
     void RestartGame()
     {
         ResetCards();
+        score = 0;
 
         if (hearts.Count > 0)
         {
@@ -74,6 +82,7 @@ public class GameManager : MonoBehaviour
             card.transform.SetParent(canvas.transform);
             card.GetComponent<RectTransform>().anchoredPosition = cardsPositions[i];
             card.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+            card.transform.SetAsFirstSibling();
             activeCards.Add(card);
         }
 
@@ -84,6 +93,7 @@ public class GameManager : MonoBehaviour
         mainCard.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
         mainCard.GetComponent<MainCard>().Init();
         mainCard.GetComponent<MainCard>().transform.Find("Icon").GetComponent<Image>().sprite = activeCards[randomCard].GetComponent<Card>().icon;
+        mainCard.transform.SetAsFirstSibling();
 
         currentTime = totalTime;
 
@@ -98,12 +108,26 @@ public class GameManager : MonoBehaviour
             audioManager.PlayLoseLifeSFX();
             ResetCards();
         }
+        else
+        {
+            gameOverDialog.SetActive(true);
+            gameOverText.text = "score: " + score;
+        }
     }
-	
-	void Update ()
+
+    void Update()
     {
-        currentTime -= Time.deltaTime;
-        timerBar.fillAmount = currentTime / totalTime;
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            quitGameDialog.SetActive(true);
+        }
+
+        if (!quitGameDialog.activeInHierarchy && !quitGameDialog.activeInHierarchy)
+        {
+            currentTime -= Time.deltaTime;
+            timerBar.fillAmount = currentTime / totalTime;
+        }
+
 
         if (currentTime <= 0)
         {
