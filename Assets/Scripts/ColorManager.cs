@@ -9,7 +9,7 @@ public class ColorManager : MonoBehaviour
     {
         Color color = new Color();
 
-        int random = Random.Range(0, colors.GetLength(0) - 1);
+        int random = Random.Range(0, colors.GetLength(0));
         color = colors[random];
 
         return color;
