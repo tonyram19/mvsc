@@ -1,27 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
-public class CardManager : MonoBehaviour
+public class MainCard : MonoBehaviour
 {
     GameManager gameManager;
 
-    void Start ()
+    void Start()
     {
         Init();
-	}
-	
+    }
+
     public void Init()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         SetColor();
-        SetRandomIcon();
         SetClickListener();
     }
 
-	void SetColor()
+    void SetColor()
     {
         GetComponent<Image>().color = gameManager.colorManager.GenerateRandomColor();
 
@@ -54,9 +52,9 @@ public class CardManager : MonoBehaviour
     void SetClickListener()
     {
         GetComponent<Button>().onClick.RemoveAllListeners();
-        GetComponent<Button>().onClick.AddListener(()=> {
+        GetComponent<Button>().onClick.AddListener(() => {
             if (transform.Find("Icon").GetComponent<Image>().sprite.name ==
-                GameObject.Find("Main Card").transform.Find("Icon").GetComponent<Image>().sprite.name)
+                gameManager.mainCard.transform.Find("Icon").GetComponent<Image>().sprite.name)
             {
                 gameManager.Init();
             }

@@ -22,7 +22,9 @@ public class IconManager : MonoBehaviour
         {
             if (icon.name == iconName)
             {
-                return icon;
+                Sprite sprite = new Sprite();
+                sprite = icon;
+                return sprite;
             }
         }
 
