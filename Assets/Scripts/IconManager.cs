@@ -15,4 +15,17 @@ public class IconManager : MonoBehaviour
 
         return sprite;
     }
+
+    public Sprite GetIconByName(string iconName)
+    {
+        foreach (Sprite icon in icons)
+        {
+            if (icon.name == iconName)
+            {
+                return icon;
+            }
+        }
+
+        return null;
+    }
 }

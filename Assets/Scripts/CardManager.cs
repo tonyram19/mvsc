@@ -9,13 +9,18 @@ public class CardManager : MonoBehaviour
 
     void Start ()
     {
+        Init();
+	}
+	
+    public void Init()
+    {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         SetColor();
-        SetIcon();
+        SetRandomIcon();
         SetClickListener();
-	}
-	
+    }
+
 	void SetColor()
     {
         GetComponent<Image>().color = gameManager.colorManager.GenerateRandomColor();
@@ -35,18 +40,25 @@ public class CardManager : MonoBehaviour
         transform.Find("Icon").GetComponent<Image>().color = iconColor;
     }
 
-    void SetIcon()
+    void SetRandomIcon()
     {
         transform.Find("Icon").GetComponent<Image>().sprite = gameManager.iconManager.GetRandomIcon();
     }
 
+    public void SetSpecificIcon(Sprite icon)
+    {
+        transform.Find("Icon").GetComponent<Image>().sprite = icon;
+
+    }
+
     void SetClickListener()
     {
+        GetComponent<Button>().onClick.RemoveAllListeners();
         GetComponent<Button>().onClick.AddListener(()=> {
             if (transform.Find("Icon").GetComponent<Image>().sprite.name ==
                 GameObject.Find("Main Card").transform.Find("Icon").GetComponent<Image>().sprite.name)
             {
-                SceneManager.LoadScene(0);
+                gameManager.Init();
             }
         });
     }
