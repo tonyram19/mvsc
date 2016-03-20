@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
             Destroy(hearts[hearts.Count - 1]);
             hearts.RemoveAt(hearts.Count - 1);
             audioManager.PlayLoseLifeSFX();
+            ResetCards();
         }
     }
 	
@@ -103,5 +104,11 @@ public class GameManager : MonoBehaviour
     {
         currentTime -= Time.deltaTime;
         timerBar.fillAmount = currentTime / totalTime;
+
+        if (currentTime <= 0)
+        {
+            LoseAHeart();
+        }
+
 	}
 }
