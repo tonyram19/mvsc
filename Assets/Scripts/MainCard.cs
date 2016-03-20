@@ -16,7 +16,6 @@ public class MainCard : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         SetColor();
-        SetClickListener();
     }
 
     void SetColor()
@@ -49,15 +48,4 @@ public class MainCard : MonoBehaviour
 
     }
 
-    void SetClickListener()
-    {
-        GetComponent<Button>().onClick.RemoveAllListeners();
-        GetComponent<Button>().onClick.AddListener(() => {
-            if (transform.Find("Icon").GetComponent<Image>().sprite.name ==
-                gameManager.mainCard.transform.Find("Icon").GetComponent<Image>().sprite.name)
-            {
-                gameManager.Init();
-            }
-        });
-    }
 }

@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour
     [Header("Managers")]
     public ColorManager colorManager;
     public IconManager iconManager;
+    public AudioManager audioManager;
+
+    [Header("Life")]
+    public int health = 3;
+    public GameObject[] heartsArray;
+    public List<GameObject> hearts;
 
     [Header("Time")]
     public float totalTime;
@@ -26,10 +32,29 @@ public class GameManager : MonoBehaviour
     void Start ()
     {
         activeCards = new List<GameObject>();
-        Init();
+        RestartGame();
     }
 
-    public void Init()
+    void RestartGame()
+    {
+        ResetCards();
+
+        if (hearts.Count > 0)
+        {
+            foreach (GameObject heart in hearts)
+                Destroy(heart);
+
+            hearts.Clear();
+            hearts = new List<GameObject>();
+        }
+
+        for (int i = 0; i < heartsArray.Length; i++)
+        {
+            hearts.Add(heartsArray[i]);
+        }
+    }
+
+    public void ResetCards()
     {
         if (activeCards.Count > 0)
         {
@@ -62,6 +87,16 @@ public class GameManager : MonoBehaviour
 
         currentTime = totalTime;
 
+    }
+
+    public void LoseAHeart()
+    {
+        if (hearts.Count >= 1)
+        {
+            Destroy(hearts[hearts.Count - 1]);
+            hearts.RemoveAt(hearts.Count - 1);
+            audioManager.PlayLoseLifeSFX();
+        }
     }
 	
 	void Update ()

@@ -59,7 +59,11 @@ public class Card : MonoBehaviour
             if (transform.Find("Icon").GetComponent<Image>().sprite.name ==
                 gameManager.mainCard.transform.Find("Icon").GetComponent<Image>().sprite.name)
             {
-                gameManager.Init();
+                gameManager.ResetCards();
+            }
+            else
+            {
+                gameManager.LoseAHeart();
             }
         });
     }
