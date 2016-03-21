@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using GoogleMobileAds.Api;
 
 public class GameManager : MonoBehaviour
 {
@@ -60,6 +61,10 @@ public class GameManager : MonoBehaviour
         {
             hearts.Add(heartsArray[i]);
         }
+
+        BannerView bannerView = new BannerView("ca-app-pub-2928229545764146/7802988518", AdSize.Banner, AdPosition.Top);
+        AdRequest request = new AdRequest.Builder().Build();
+        bannerView.LoadAd(request);
     }
 
     public void ResetCards()

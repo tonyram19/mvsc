@@ -5,10 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class ButtonPlayGame : MonoBehaviour
 {
-	void Start ()
+    public GameObject tutorial;
+
+    void Start ()
     {
         GetComponent<Button>().onClick.AddListener(()=> {
-            SceneManager.LoadScene(1);
+            if (PlayerPrefs.GetInt("tutorialWasCompleted") == 1)
+            { 
+                SceneManager.LoadScene(1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("tutorialWasCompleted", 1);
+                tutorial.SetActive(true);
+            }
+
         });
 	}
 	
