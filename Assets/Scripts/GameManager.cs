@@ -2,8 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Advertisements;
-
 
 public class GameManager : MonoBehaviour
 {
@@ -62,6 +60,7 @@ public class GameManager : MonoBehaviour
         {
             hearts.Add(heartsArray[i]);
         }
+
     }
 
     public void ResetCards()
@@ -114,7 +113,6 @@ public class GameManager : MonoBehaviour
         {
             gameOverDialog.SetActive(true);
             gameOverText.text = "score: " + score;
-            //Advertisement.Show();
         }
     }
 
