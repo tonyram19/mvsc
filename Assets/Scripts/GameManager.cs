@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Score")]
     public int score = 0;
+    public int highScore;
 
     [Header("Cards")]
     public GameObject mainCard;
@@ -34,9 +35,10 @@ public class GameManager : MonoBehaviour
     [Header("Other")]
     public GameObject quitGameDialog;
     public GameObject gameOverDialog;
-    public Text gameOverText;
+    public Text scoreText;
+    public Text highscoreText;
 
-    void Start ()
+    void Start()
     {
         activeCards = new List<GameObject>();
         RestartGame();
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour
     {
         ResetCards();
         score = 0;
+        highScore = PlayerPrefs.GetInt("highScore");
 
         if (hearts.Count > 0)
         {
@@ -96,7 +99,45 @@ public class GameManager : MonoBehaviour
         mainCard.GetComponent<MainCard>().transform.Find("Icon").GetComponent<Image>().sprite = activeCards[randomCard].GetComponent<Card>().icon;
         mainCard.transform.SetAsFirstSibling();
 
-        currentTime = totalTime;
+
+        if (score > 10 && score <= 15)
+            currentTime = totalTime - 0.2f;
+        else if (score > 15 && score <= 20)
+            currentTime = totalTime - 0.3f;
+        else if (score > 20 && score <= 25)
+            currentTime = totalTime - 0.4f;
+        else if (score > 25 && score <= 30)
+            currentTime = totalTime - 0.5f;
+        else if (score > 30 && score <= 35)
+            currentTime = totalTime - 0.6f;
+        else if (score > 35 && score <= 40)
+            currentTime = totalTime - 0.7f;
+        else if (score > 40 && score <= 45)
+            currentTime = totalTime - 0.8f;
+        else if (score > 45 && score <= 50)
+            currentTime = totalTime - 0.9f;
+        else if (score > 50 && score <= 55)
+            currentTime = totalTime - 1f;
+        else if (score > 55 && score <= 60)
+            currentTime = totalTime - 1.1f;
+        else if (score > 60 && score <= 65)
+            currentTime = totalTime - 1.2f;
+        else if (score > 65 && score <= 70)
+            currentTime = totalTime - 1.3f;
+        else if (score > 70 && score <= 75)
+            currentTime = totalTime - 1.4f;
+        else if (score > 75 && score <= 80)
+            currentTime = totalTime - 1.5f;
+        else if (score > 80 && score <= 85)
+            currentTime = totalTime - 1.6f;
+        else if (score > 85 && score <= 90)
+            currentTime = totalTime - 1.7f;
+        else if (score > 90)
+            currentTime = totalTime - 1.8f;
+        else
+            currentTime = totalTime;
+
+
 
     }
 
@@ -111,8 +152,13 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+
+            if (score > highScore)
+                PlayerPrefs.SetInt("highScore", score);
+
             gameOverDialog.SetActive(true);
-            gameOverText.text = "score: " + score;
+            scoreText.text = "score: " + score;
+            highscoreText.text = "high score: " + PlayerPrefs.GetInt("highScore");
         }
     }
 
